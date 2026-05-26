@@ -1,0 +1,139 @@
+/* === TOUR TRACKER === */
+.tour__title { margin-bottom: var(--space-2xl); }
+
+.tour__list {
+  max-width: 1000px;
+}
+
+.tour__row {
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  align-items: center;
+  gap: var(--space-xl);
+  padding: var(--space-xl) 0;
+  transition: opacity var(--duration-fast);
+}
+
+.tour__row--past {
+  opacity: 0.3;
+}
+.tour__row:hover:not(.tour__row--past) {
+  opacity: 1;
+}
+
+.tour__separator {
+  height: 1px;
+  background: var(--glass-border);
+  will-change: transform;
+}
+
+.tour__date-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.tour__date {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tour__year {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--white-ghost);
+  margin-top: var(--space-xs);
+}
+
+.tour__venue {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+}
+
+.tour__city {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--white-muted);
+  margin-top: var(--space-xs);
+  text-transform: uppercase;
+}
+
+.tour__ticket-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border: 1px solid var(--neon-violet);
+  border-radius: 6px;
+  color: var(--neon-violet);
+  background: transparent;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+  will-change: transform;
+}
+
+.tour__ticket-btn:hover {
+  background: var(--neon-violet);
+  color: var(--white-pure);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+}
+
+.tour__ticket-btn--soon {
+  border-color: var(--white-ghost);
+  color: var(--white-ghost);
+}
+.tour__ticket-btn--soon:hover {
+  background: var(--void-elevated);
+  border-color: var(--white-muted);
+  color: var(--white-muted);
+  box-shadow: none;
+}
+
+.tour__sold-out {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--white-ghost);
+  text-decoration: line-through;
+}
+
+/* Floating Image */
+.tour__floating-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity var(--duration-fast), transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.tour__floating-img--visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tour__floating-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tour__row {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+  }
+  .tour__action-col {
+    justify-self: start;
+  }
+  .tour__floating-img { display: none; }
+}

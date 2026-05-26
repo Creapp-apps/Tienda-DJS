@@ -1,0 +1,241 @@
+.vinyl-card {
+  position: relative;
+  width: 100%;
+  padding: 12px;
+  transition: transform 0.15s ease-out,
+              box-shadow var(--duration-fast);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.vinyl-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6),
+              0 0 30px rgba(255, 255, 255, 0.02);
+}
+
+/* Vinyl spinning disc */
+.vinyl-card__disc-wrap {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 72px;
+  height: 72px;
+  z-index: 1;
+  transform: translate(0, -3px);
+  transition: transform var(--duration-med) var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.vinyl-card:hover .vinyl-card__disc-wrap {
+  transform: translate(25px, -8px) rotate(15deg);
+}
+
+.vinyl-card__disc-wrap--playing {
+  transform: translate(25px, -8px) rotate(15deg) !important;
+}
+
+.vinyl-card__disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Playing spin loop */
+.vinyl-card__disc-wrap--playing .vinyl-card__disc {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.vinyl-card__disc-grooves {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1px double rgba(255, 255, 255, 0.08);
+  background: repeating-radial-gradient(
+    circle,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 3px,
+    rgba(255, 255, 255, 0.03) 4px
+  );
+}
+
+.vinyl-card__disc-label {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--void-surface);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vinyl-card__disc-center {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--void-deep);
+}
+
+/* Front Jacket */
+.vinyl-card__jacket {
+  position: relative;
+  z-index: 2;
+  transform: translateZ(20px); /* 3D layer depth */
+}
+
+.vinyl-card__cover {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--void-deep);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vinyl-card__cover-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.02;
+  filter: blur(40px);
+  transition: opacity var(--duration-fast);
+}
+
+.vinyl-card:hover .vinyl-card__cover-glow {
+  opacity: 0.15;
+}
+
+.vinyl-card__type {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--white-muted);
+  text-transform: uppercase;
+  background: rgba(3, 3, 3, 0.7);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--glass-border);
+}
+
+.vinyl-card__play-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--white-pure);
+  color: var(--void-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+.vinyl-card__play-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.vinyl-card:hover .vinyl-card__play-btn,
+.vinyl-card__play-btn--playing {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.vinyl-card__play-btn:hover {
+  transform: scale(1.1);
+  background: var(--neon-violet);
+  color: var(--white-pure);
+}
+
+.vinyl-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.vinyl-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.vinyl-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--white-pure);
+}
+
+.vinyl-card__price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white-pure);
+}
+
+.vinyl-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: var(--white-muted);
+}
+
+.vinyl-card__waveform-container {
+  margin: var(--space-sm) 0;
+  padding: var(--space-xs);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.vinyl-card__add-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--void-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  color: var(--white-pure);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.vinyl-card__add-btn:hover {
+  background: var(--white-pure);
+  color: var(--void-deep);
+  border-color: var(--white-pure);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Touch fallback: always show play button & disc slightly popped */
+@media (hover: none) {
+  .vinyl-card__disc-wrap {
+    transform: translate(22px, -8px) rotate(10deg);
+  }
+  .vinyl-card__play-btn {
+    opacity: 1;
+  }
+}

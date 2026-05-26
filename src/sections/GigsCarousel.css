@@ -1,0 +1,371 @@
+/* === GIGS CAROUSEL === */
+.gigs.section {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}
+
+.gigs__title {
+  margin-bottom: var(--space-xl);
+}
+
+.gigs__carousel {
+  overflow: hidden;
+  padding: var(--space-lg) 0;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.gigs__track {
+  display: flex;
+  gap: var(--space-lg);
+  width: max-content;
+  will-change: transform;
+}
+
+.gigs__track--animate {
+  animation: marquee 45s linear infinite;
+}
+
+.gigs__track--static {
+  width: auto;
+  justify-content: center;
+  margin: 0 auto;
+  flex-wrap: wrap; /* Wraps beautiful cards on mobile if static */
+}
+
+.gigs__carousel--static {
+  display: flex;
+  justify-content: center;
+  mask-image: none;
+  -webkit-mask-image: none;
+  padding: var(--space-lg) var(--space-md);
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.gigs__card {
+  flex-shrink: 0;
+  width: 350px;
+  height: 460px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  transition: transform var(--duration-fast) var(--ease-out-expo),
+              filter var(--duration-fast);
+}
+
+.gigs__card:hover {
+  transform: scale(1.05);
+  z-index: 2;
+}
+
+.gigs__card-image {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.gigs__card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-med) var(--ease-out-expo),
+              filter var(--duration-med);
+}
+
+.gigs__card:hover .gigs__card-image img {
+  transform: scale(1.1);
+  filter: saturate(1.3) hue-rotate(10deg);
+}
+
+.gigs__card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-lg);
+  background: linear-gradient(
+    to top,
+    rgba(3, 3, 3, 0.95) 0%,
+    rgba(3, 3, 3, 0.4) 60%,
+    transparent 100%
+  );
+  transform: translateY(30%);
+  opacity: 0;
+  transition: transform var(--duration-fast) var(--ease-out-expo),
+              opacity var(--duration-fast);
+}
+
+.gigs__card:hover .gigs__card-overlay {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.gigs__card-venue {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.gigs__card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--white-muted);
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .gigs__card { width: 280px; height: 370px; }
+  .gigs__track { gap: var(--space-md); }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+/* Premium Floating Toast Modal for Gig Details */
+.gigs-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 2, 6, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  opacity: 0;
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.gigs-modal__card {
+  width: 100%;
+  max-width: 900px;
+  background: #08060d; /* Deep opaque void black */
+  border: 1px solid rgba(236, 72, 153, 0.25);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(236, 72, 153, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transform: translateY(30px) scale(0.95);
+  animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cardEntrance {
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.gigs-modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--white-pure);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--duration-fast);
+}
+
+.gigs-modal__close:hover {
+  background: var(--neon-magenta);
+  border-color: var(--neon-magenta);
+  transform: rotate(90deg);
+}
+
+.gigs-modal__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  min-height: 480px;
+}
+
+/* Photo Gallery Side */
+.gigs-modal__gallery {
+  padding: var(--space-xl);
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-md);
+  border-right: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.gigs-modal__main-box {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: #030206;
+}
+
+.gigs-modal__main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: photoFadeIn 0.3s ease-out;
+}
+
+@keyframes photoFadeIn {
+  from { opacity: 0.6; filter: blur(4px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+.gigs-modal__thumbnails {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.gigs-modal__thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  background: #030206;
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--duration-fast);
+}
+
+.gigs-modal__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  transition: opacity var(--duration-fast);
+}
+
+.gigs-modal__thumb:hover img {
+  opacity: 1;
+}
+
+.gigs-modal__thumb--active {
+  border-color: var(--neon-magenta);
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
+}
+
+.gigs-modal__thumb--active img {
+  opacity: 1;
+}
+
+.gigs-modal__no-media {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(236, 72, 153, 0.2);
+  color: var(--white-muted);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+/* Info Side */
+.gigs-modal__info {
+  padding: var(--space-xl) var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gigs-modal__date {
+  font-size: 0.75rem;
+  color: var(--neon-magenta);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-xs);
+  font-weight: 700;
+}
+
+.gigs-modal__venue {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--white-pure);
+  margin-bottom: var(--space-xs);
+  letter-spacing: -0.02em;
+}
+
+.gigs-modal__city {
+  font-size: 0.8rem;
+  color: var(--white-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-lg);
+}
+
+.gigs-modal__divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--neon-magenta), var(--neon-violet));
+  margin-bottom: var(--space-lg);
+}
+
+.gigs-modal__description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--white-ghost);
+}
+
+/* Responsive Gigs Modal */
+@media (max-width: 900px) {
+  .gigs-modal {
+    padding: var(--space-md);
+  }
+  .gigs-modal__card {
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .gigs-modal__grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .gigs-modal__gallery {
+    padding: var(--space-lg);
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  }
+  .gigs-modal__info {
+    padding: var(--space-lg);
+  }
+  .gigs-modal__venue {
+    font-size: 1.8rem;
+  }
+}

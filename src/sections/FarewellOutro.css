@@ -1,0 +1,430 @@
+/* === FAREWELL OUTRO SCROLL TRIGGER === */
+.outro-trigger {
+  width: 100%;
+  height: 1px;
+  margin-top: -60px;
+  position: relative;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* === IMMERSIVE CINEMATIC OVERLAY === */
+.outro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.outro-overlay--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Darkened Immersive Backdrop */
+.outro-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 3, 3, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1;
+}
+
+/* Radical Stage Spotlight Spotlight */
+.outro-overlay__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 80vh;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.16) 0%, rgba(6, 182, 212, 0.03) 55%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(120px);
+}
+
+/* === GLASSMORPHIC BOOKING CARD === */
+.outro-card {
+  position: relative;
+  z-index: 3;
+  width: 90%;
+  max-width: 960px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 28px;
+  padding: 60px;
+  box-shadow: 
+    0 40px 120px rgba(139, 92, 246, 0.16), 
+    0 0 50px rgba(6, 182, 212, 0.03), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  transform: scale(0.93);
+  filter: blur(10px);
+  transition: 
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+    filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.outro-overlay--active .outro-card {
+  transform: scale(1);
+  filter: blur(0);
+}
+
+/* Sleek Dismiss Close Button */
+.outro-card__close {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: var(--white-muted);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  z-index: 10;
+}
+
+.outro-card__close:hover {
+  background: var(--neon-violet);
+  border-color: transparent;
+  color: var(--white-pure);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Grid Layout */
+.outro-card__grid {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.outro-card__grid--3col {
+  grid-template-columns: 1.15fr 0.95fr 0.9fr;
+}
+
+.outro-card__grid--2col {
+  grid-template-columns: 1.25fr 0.75fr;
+}
+
+/* Central Silhouette Column */
+.outro-card__silhouette {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.outro-card__silhouette-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+}
+
+.outro-card__silhouette-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 170px;
+  height: 170px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.03) 50%, transparent 100%);
+  filter: blur(30px);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  
+  /* Slower, ultra-smooth cinematic transition */
+  transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.outro-card__silhouette-wrapper:hover .outro-card__silhouette-glow {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0.05) 60%, transparent 100%);
+  filter: blur(35px);
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.outro-card__silhouette-img {
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+  
+  /* Apply "Añadir" (linear dodge / screen) blend mode to integrate seamlessly */
+  mix-blend-mode: plus-lighter;
+  
+  /* Soften edges with micro-blur */
+  filter: blur(0.4px);
+  
+  /* Weighted cinematic transition to prevent rapid jumps */
+  transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Dissolve bottom edge smoothly into card background */
+  mask-image: linear-gradient(to top, transparent 0%, black 20%);
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 20%);
+}
+
+/* Hover triggered on the wrapper to completely prevent hover jitter loop */
+.outro-card__silhouette-wrapper:hover .outro-card__silhouette-img {
+  opacity: 1;
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Left Content Col */
+.outro-card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.outro-card__label {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: var(--neon-violet);
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+  font-weight: 700;
+  text-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+}
+
+.outro-card__title {
+  font-size: 2.6rem;
+  line-height: 1.15;
+  color: var(--white-pure);
+  margin-bottom: var(--space-md);
+  letter-spacing: -0.02em;
+}
+
+.outro-card__subtitle {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--white-muted);
+  max-width: 520px;
+  margin-bottom: var(--space-xl);
+}
+
+/* Dual Button Styling */
+.outro-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.outro-card__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 14px 30px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.outro-card__btn svg {
+  transition: transform var(--duration-fast) var(--ease-smooth);
+}
+
+/* Primary Booking Action */
+.outro-card__btn--primary {
+  background: var(--neon-violet);
+  color: var(--white-pure);
+  border: 1px solid transparent;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.outro-card__btn--primary:hover {
+  background: var(--white-pure);
+  color: var(--void-deep);
+  transform: translateY(-3px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+.outro-card__btn--primary:hover svg {
+  transform: scale(1.15) rotate(-8deg);
+}
+
+/* Secondary Music Link */
+.outro-card__btn--secondary {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--white-pure);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.outro-card__btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--white-muted);
+  transform: translateY(-3px);
+}
+
+.outro-card__btn--secondary:hover svg {
+  transform: translateY(-2px);
+}
+
+/* Right Media Col - Blending & Masking */
+.outro-card__media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.outro-card__image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+.outro-card__img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 35px rgba(139, 92, 246, 0.2));
+  
+  /* Smooth cinematic slow-decelerating bezier curve */
+  transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Modern multi-direction linear-gradient masking */
+  mask-image: linear-gradient(to top, transparent 0%, black 15%, black 85%, transparent 100%),
+              linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 15%, black 85%, transparent 100%),
+                      linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
+.outro-card__img:hover {
+  opacity: 1;
+  transform: scale(1.02);
+  filter: drop-shadow(0 0 45px rgba(139, 92, 246, 0.35));
+}
+
+/* ==========================================
+   INTELLIGENT FADE OUT OF THE ENTIRE PAGE
+========================================== */
+body.outro-active main > :not(.outro-overlay):not(.outro-trigger) {
+  opacity: 0 !important;
+  filter: blur(25px) grayscale(100%) !important;
+  pointer-events: none;
+  transition: 
+    opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+    filter 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+body.outro-active footer {
+  display: none !important;
+}
+
+/* Smooth restoration transitions */
+main > *, footer {
+  transition: 
+    opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+    filter 1s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Keep Navbar Clean & Subtle during fade */
+body.outro-active .navbar {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN (TABLETS & PHONES)
+========================================== */
+@media (max-width: 992px) {
+  .outro-card {
+    padding: 40px 24px 32px;
+    width: 92%;
+    border-radius: 24px;
+  }
+  
+  .outro-card__close {
+    top: 16px;
+    right: 16px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .outro-card__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    text-align: center;
+  }
+
+  .outro-card__content {
+    order: 3;
+    align-items: center;
+  }
+
+  .outro-card__silhouette {
+    order: 1;
+    margin-top: 16px;
+    justify-content: center;
+  }
+
+  .outro-card__silhouette-img {
+    max-height: 220px;
+  }
+
+  .outro-card__media {
+    order: 2;
+    margin-top: 0;
+  }
+
+  .outro-card__title {
+    font-size: 1.8rem;
+  }
+
+  .outro-card__subtitle {
+    max-width: 100%;
+    font-size: 0.95rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  .outro-card__actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .outro-card__btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .outro-card__img {
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .outro-card__title {
+    font-size: 1.5rem;
+  }
+}

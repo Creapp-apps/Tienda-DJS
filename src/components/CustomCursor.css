@@ -1,0 +1,41 @@
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--white-pure);
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  will-change: transform;
+  transition: width 0.3s var(--ease-out-expo),
+              height 0.3s var(--ease-out-expo),
+              border-color 0.3s;
+}
+
+.cursor-ring--hover {
+  border-color: var(--neon-violet);
+}
+
+.cursor--hidden {
+  opacity: 0;
+}
+
+/* Hide default cursor when custom cursor is active */
+@media (hover: hover) {
+  * { cursor: none !important; }
+}

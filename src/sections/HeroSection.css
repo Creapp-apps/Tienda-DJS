@@ -1,0 +1,165 @@
+/* === HERO SECTION === */
+.hero {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--void-deep);
+}
+
+.hero__bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 60%,
+    rgba(139, 92, 246, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__image-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  margin-top: -65px; /* Pulls the portrait stack up closer to the navbar to eliminate empty space */
+}
+
+.hero__image-wrap--sandwich {
+  z-index: auto; /* allows child layers to blend with external z-indices */
+}
+
+.hero__image {
+  width: min(600px, 70vw);
+  height: min(750px, 85vh);
+  position: relative;
+  will-change: transform;
+}
+
+.hero__image--bg {
+  z-index: 1; /* Sits under the title */
+}
+
+.hero__image--fg {
+  position: absolute !important;
+  width: min(600px, 70vw);
+  height: min(750px, 85vh);
+  z-index: 3; /* Sits over the title */
+  mix-blend-mode: normal;
+  pointer-events: none;
+}
+
+.hero__portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(20%) contrast(1.1);
+}
+
+.hero__portrait--silhouette {
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 15px rgba(139, 92, 246, 0.12)) !important;
+}
+
+.hero__title--sandwich {
+  z-index: 2 !important; /* Perfect middle-layer sandwiched between bg and fg images! */
+}
+
+/* Title with text masking */
+.hero__title {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(5rem, 18vw, 16rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  mix-blend-mode: difference;
+  color: var(--white-pure);
+  text-align: center;
+  pointer-events: none;
+  overflow: visible; /* allow dropshadow and glowing borders to exceed typographic line boundaries */
+}
+
+.hero__char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* Vector logo image in 3D Sandwich stack */
+.hero__logo-img {
+  width: min(580px, 68vw);
+  height: auto;
+  max-height: 40vh;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.06));
+  will-change: transform, opacity;
+}
+
+/* Subtitle */
+.hero__subtitle {
+  position: absolute;
+  bottom: var(--space-xl);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 var(--container-padding);
+  z-index: 3;
+}
+
+.hero__tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+
+.hero__scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--white-ghost);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--white-ghost), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero__image-wrap { margin-top: -35px; }
+  .hero__title { font-size: clamp(4rem, 22vw, 8rem); }
+  .hero__image { width: 85vw; height: 70vh; }
+  .hero__subtitle { flex-direction: column; align-items: flex-start; gap: var(--space-lg); }
+  .hero__scroll-indicator { display: none; }
+}
