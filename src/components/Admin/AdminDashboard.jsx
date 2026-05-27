@@ -69,12 +69,7 @@ export default function AdminDashboard() {
   const uploadToR2 = async (file, cleanName) => {
     try {
       const formData = new FormData();
-      // Use cleanName if provided, otherwise preserve original file name
-      const uploadFile = cleanName 
-        ? new File([file], cleanName, { type: file.type }) 
-        : file;
-        
-      formData.append('file', uploadFile);
+      formData.append('file', file, cleanName || file.name);
 
       const res = await fetch('/api/upload', {
         method: 'POST',

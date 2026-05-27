@@ -7,12 +7,12 @@
       "static/chunks/main-app-4625de25a600af70.js",
       "static/chunks/app/_not-found/page-43f1068a97c1f57c.js"
     ],
-    "/api/upload/route": [
+    "/api/checkout/route": [
       "static/chunks/webpack-3d9098288838c151.js",
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-4f84124391a7dac4.js",
       "static/chunks/main-app-4625de25a600af70.js",
-      "static/chunks/app/api/upload/route-d925e55707701b0d.js"
+      "static/chunks/app/api/checkout/route-d925e55707701b0d.js"
     ],
     "/layout": [
       "static/chunks/webpack-3d9098288838c151.js",
@@ -22,12 +22,12 @@
       "static/css/7ad45ab5d826d2a1.css",
       "static/chunks/app/layout-c7a045bb647d50b7.js"
     ],
-    "/api/checkout/route": [
+    "/api/upload/route": [
       "static/chunks/webpack-3d9098288838c151.js",
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-4f84124391a7dac4.js",
       "static/chunks/main-app-4625de25a600af70.js",
-      "static/chunks/app/api/checkout/route-d925e55707701b0d.js"
+      "static/chunks/app/api/upload/route-d925e55707701b0d.js"
     ],
     "/artists/[slug]/page": [
       "static/chunks/webpack-3d9098288838c151.js",
@@ -37,7 +37,7 @@
       "static/css/872cf34a20306ac4.css",
       "static/chunks/c15bf2b0-52e8419f34af26ab.js",
       "static/chunks/946-e83841d5ed09d71b.js",
-      "static/chunks/303-8529d8a6dd52e454.js",
+      "static/chunks/303-b6fd75217878b0e9.js",
       "static/chunks/app/artists/[slug]/page-006721389bfd68bd.js"
     ],
     "/page": [
@@ -48,7 +48,7 @@
       "static/css/872cf34a20306ac4.css",
       "static/chunks/c15bf2b0-52e8419f34af26ab.js",
       "static/chunks/946-e83841d5ed09d71b.js",
-      "static/chunks/303-8529d8a6dd52e454.js",
+      "static/chunks/303-b6fd75217878b0e9.js",
       "static/chunks/app/page-a432d41de6806ba3.js"
     ]
   }
