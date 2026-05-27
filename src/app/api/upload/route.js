@@ -36,7 +36,7 @@ export async function POST(req) {
 
     await s3Client.send(command);
 
-    const publicUrl = `${process.env.NEXT_PUBLIC_CLOUDFLARE_R2_PUBLIC_URL || 'https://pub-07c76c2db2ed47249738d31d00cccd6b.r2.dev'}/${key}`;
+    const publicUrl = `${process.env.NEXT_PUBLIC_CLOUDFLARE_R2_PUBLIC_URL || '/api/media'}/${key}`;
 
     return NextResponse.json({
       success: true,
