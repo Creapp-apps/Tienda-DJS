@@ -391,6 +391,16 @@ export default function AdminDashboard() {
 
           <div className="admin-console__actions">
             <button
+              className="admin-action-btn admin-action-btn--magenta font-mono"
+              onClick={() => {
+                const dataStr = JSON.stringify(siteData, null, 2);
+                navigator.clipboard.writeText(dataStr);
+                alert('¡Configuración copiada al portapapeles! Pégala en el chat con tu desarrollador para hacerla permanente en el servidor.');
+              }}
+            >
+              📋 COPIAR RESPALDO JSON
+            </button>
+            <button
               className="admin-action-btn admin-action-btn--glow font-mono"
               onClick={autofillStockPhotos}
             >
@@ -459,8 +469,9 @@ export default function AdminDashboard() {
             <button
               className={`admin-nav-btn font-mono ${activeTab === 'backup' ? 'admin-nav-btn--active' : ''}`}
               onClick={() => setActiveTab('backup')}
+              style={{ borderLeft: '2px solid var(--neon-magenta)', color: 'var(--neon-magenta)' }}
             >
-              💾 COPILACIÓN / BACKUP
+              💾 RESPALDO JSON
             </button>
           </nav>
 
@@ -468,6 +479,39 @@ export default function AdminDashboard() {
           <div className="admin-console__content">
             {activeTab === 'brand' && (
               <div className="admin-form">
+                {/* Banner informativo sobre persistencia */}
+                <div style={{
+                  background: 'rgba(236, 72, 153, 0.07)',
+                  border: '1px solid rgba(236, 72, 153, 0.2)',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  marginBottom: '24px',
+                  boxShadow: '0 0 15px rgba(236, 72, 153, 0.05)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px'
+                }}>
+                  <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--white-pure)', margin: 0, lineHeight: '1.5' }}>
+                    💡 <strong>IMPORTANTE: PERSISTENCIA EN INCÓGNITO Y PRODUCCIÓN</strong>
+                    <br />
+                    Los cambios realizados en esta consola se guardan en la memoria local de tu navegador actual. Para verlos reflejados en modo incógnito, en dispositivos móviles o para todos tus clientes en producción, debes hacer clic en el botón superior rosa <strong>📋 COPIAR RESPALDO JSON</strong> y enviarme el código resultante para que lo guarde permanentemente en el servidor.
+                  </p>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <button
+                      type="button"
+                      className="admin-action-btn admin-action-btn--magenta font-mono"
+                      style={{ padding: '6px 12px', fontSize: '0.65rem' }}
+                      onClick={() => {
+                        const dataStr = JSON.stringify(siteData, null, 2);
+                        navigator.clipboard.writeText(dataStr);
+                        alert('¡Configuración copiada al portapapeles! Pégala en el chat con tu desarrollador para hacerla permanente en el servidor.');
+                      }}
+                    >
+                      📋 COPIAR RESPALDO JSON AHORA
+                    </button>
+                  </div>
+                </div>
+
                 <div className="admin-field">
                   <label className="font-mono">Logotipo Principal (PNG/SVG recomendado)</label>
                   <div className="admin-file-wrapper">

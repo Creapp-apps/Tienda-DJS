@@ -1,0 +1,153 @@
+{
+  "logo": "/LOZANO - TRANSPARENTE BLANCO.png",
+  "logoScale": 110,
+  "bioData": {
+    "tagline": "Latin Tech / After mix",
+    "intro": "Desde los suburbios de Buenos Aires hasta los escenarios más grandes de Latinoamérica.",
+    "paragraphs": [
+      {
+        "text": "LOZANO no es solo un DJ — es una fuerza que redefine la escena electrónica urbana. Con raíces en el underground porteño, su sonido fusiona la energía cruda del techno con la actitud del reggaetón y la música urbana.",
+        "highlight": "fuerza que redefine"
+      },
+      {
+        "text": "Sus sets son experiencias inmersivas que desafían las fronteras entre géneros. Cada mezcla es una declaración de identidad: bass pesados, builds cinematográficos y drops que hacen temblar las paredes de los clubs más icónicos.",
+        "highlight": "experiencias inmersivas"
+      },
+      {
+        "text": "Con residencias en los venues más exclusivos y una comunidad que crece exponencialmente, LOZANO se posiciona como la próxima referencia del sonido nuevo latinoamericano.",
+        "highlight": "próxima referencia"
+      }
+    ],
+    "stats": [
+      { "value": "150+", "label": "Shows en vivo" },
+      { "value": "50K+", "label": "Seguidores" },
+      { "value": "30+", "label": "Tracks editados" },
+      { "value": "12", "label": "Ciudades" }
+    ],
+    "heroImage": "/api/media/uploads/fy4pishlobq_1779897273736_hero.png",
+    "heroSilhouette": null,
+    "heroLogo": null,
+    "heroLogoScale": 100,
+    "heroLogoYOffset": 0,
+    "sectionTitle": "Biografía",
+    "bioImage": "/api/media/uploads/mb4vdyip32d_1779897287182_bio.png"
+  },
+  "manifestoData": {
+    "sectionTitle": "Sonido & Síntesis",
+    "tagline": "Identidad Analógica & Groove",
+    "intro": "Un viaje a través de la síntesis modular, cajas de ritmo y la crudeza del hardware analógico.",
+    "paragraphs": [
+      {
+        "text": "El sonido de LOZANO se caracteriza por una búsqueda constante de texturas orgánicas e imperfecciones analógicas. Su setup combina sintetizadores modulares con cajas de ritmos clásicas de Roland y Elektron.",
+        "highlight": "búsqueda constante"
+      },
+      {
+        "text": "Cada elemento en sus sets está pensado para generar tensión y liberación física en la pista. No se trata solo de tocar música, sino de esculpir el aire con frecuencias subsónicas y grooves hipnóticos.",
+        "highlight": "grooves hipnóticos"
+      }
+    ],
+    "image": "/api/media/uploads/mb4vdyip32d_1779897287182_bio.png"
+  },
+  "gigsData": [],
+  "tourDates": [
+    {
+      "id": "1",
+      "date": "2026-06-05",
+      "venue": "Cocoliche",
+      "city": "Buenos Aires",
+      "ticketUrl": "https://www.passline.com"
+    },
+    {
+      "id": "2",
+      "date": "2026-06-12",
+      "venue": "Bahrein",
+      "city": "Buenos Aires",
+      "ticketUrl": "https://www.passline.com"
+    },
+    {
+      "id": "3",
+      "date": "2026-06-20",
+      "venue": "Crobar",
+      "city": "Buenos Aires",
+      "ticketUrl": "https://www.passline.com"
+    },
+    {
+      "id": "4",
+      "date": "2026-07-04",
+      "venue": "Club de la Música",
+      "city": "Rosario",
+      "ticketUrl": "https://www.passline.com"
+    },
+    {
+      "id": "5",
+      "date": "2026-07-18",
+      "venue": "Las Fiestas de la Calle",
+      "city": "Santiago de Chile",
+      "ticketUrl": "https://www.passline.com"
+    }
+  ],
+  "tracksData": [
+    {
+      "id": 1,
+      "title": "Latin Tech Anthem",
+      "type": "Original Mix",
+      "genre": "Latin Tech",
+      "bpm": 126,
+      "price": 2500,
+      "currency": "ARS",
+      "duration": "6:12",
+      "coverColor": "#E11D48",
+      "mp3Url": "/api/media/uploads/track_1.mp3",
+      "waveform": [30, 45, 60, 40, 70, 85, 55, 30, 45, 60, 75, 90, 50, 40, 60, 80, 65, 45, 50, 30]
+    },
+    {
+      "id": 2,
+      "title": "Suburban Groove",
+      "type": "Original Mix",
+      "genre": "Techno",
+      "bpm": 128,
+      "price": 2000,
+      "currency": "ARS",
+      "duration": "5:45",
+      "coverColor": "#2563EB",
+      "mp3Url": "/api/media/uploads/track_2.mp3",
+      "waveform": [40, 55, 70, 50, 80, 95, 65, 40, 55, 70, 85, 100, 60, 50, 70, 90, 75, 55, 60, 40]
+    },
+    {
+      "id": 3,
+      "title": "Afterhours Jam",
+      "type": "Live Cut",
+      "genre": "Minimal / Deep Tech",
+      "bpm": 124,
+      "price": 1800,
+      "currency": "ARS",
+      "duration": "7:04",
+      "coverColor": "#16A34A",
+      "mp3Url": "/api/media/uploads/track_3.mp3",
+      "waveform": [20, 35, 50, 30, 60, 75, 45, 20, 35, 50, 65, 80, 40, 30, 50, 70, 55, 35, 40, 20]
+    }
+  ],
+  "videosData": [
+    {
+      "id": "1",
+      "title": "LOZANO Live Set @ Crobar Buenos Aires",
+      "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "thumbnailUrl": "/api/media/uploads/video_1_thumb.png"
+    },
+    {
+      "id": "2",
+      "title": "Studio Sessions Vol. 1",
+      "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "thumbnailUrl": "/api/media/uploads/video_2_thumb.png"
+    }
+  ],
+  "outroData": {
+    "title": "THE SOUND EXPERIENCE",
+    "subtitle": "¿Listo para llevar los sets híbridos de LOZANO a tu festival, club o evento privado?",
+    "image": "/LOZANO - TRANSPARENTE BLANCO.png",
+    "cta1Text": "RESERVAR BOOKING",
+    "cta1Url": "https://wa.me/5491100000000?text=Hola%20Lozano,%20me%20gustaria%20consultar%20por%20fechas%20de%20booking...",
+    "cta2Text": "ESCUCHAR MÚSICA",
+    "cta2Url": "#vault"
+  }
+}
