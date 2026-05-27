@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useContext, useReducer, useEffect } from 'react';
 
 const CartContext = createContext(null);
@@ -9,6 +10,8 @@ const initialState = {
 
 function cartReducer(state, action) {
   switch (action.type) {
+    case 'INITIALIZE_CART':
+      return { ...state, items: action.payload };
     case 'ADD_ITEM': {
       const exists = state.items.find(item => item.id === action.payload.id);
       if (exists) return state;
@@ -30,19 +33,24 @@ function cartReducer(state, action) {
 }
 
 export function CartProvider({ children }) {
-  const [state, dispatch] = useReducer(cartReducer, initialState, (initial) => {
-    try {
-      const saved = localStorage.getItem('lozano-cart');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        return { ...initial, items: parsed };
-      }
-    } catch (e) { /* ignore */ }
-    return initial;
-  });
+  const [state, dispatch] = useReducer(cartReducer, initialState);
 
   useEffect(() => {
-    localStorage.setItem('lozano-cart', JSON.stringify(state.items));
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('lozano-cart');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          dispatch({ type: 'INITIALIZE_CART', payload: parsed });
+        }
+      } catch (e) { /* ignore */ }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && state.items.length > 0) {
+      localStorage.setItem('lozano-cart', JSON.stringify(state.items));
+    }
   }, [state.items]);
 
   const addItem = (item) => dispatch({ type: 'ADD_ITEM', payload: item });

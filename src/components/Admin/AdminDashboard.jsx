@@ -66,8 +66,35 @@ export default function AdminDashboard() {
       }
     });
   };
+  const uploadToR2 = async (file, cleanName) => {
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          filename: cleanName || file.name,
+          contentType: file.type,
+        }),
+      });
+      if (!res.ok) throw new Error('Error al obtener firma de subida');
+      
+      const { presignedUrl, publicUrl } = await res.json();
+      
+      const uploadRes = await fetch(presignedUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
+      });
+      if (!uploadRes.ok) throw new Error('Error al subir archivo a R2');
+      
+      return publicUrl;
+    } catch (e) {
+      console.error('R2 upload failed:', e);
+      throw e;
+    }
+  };
 
-  const compressImage = (file, callback, format = 'image/jpeg') => {
+  const compressImage = (file, callback, format = 'image/jpeg', targetName = 'asset') => {
     const reader = new FileReader();
     reader.onload = (event) => {
       const img = new Image();
@@ -100,12 +127,27 @@ export default function AdminDashboard() {
         }
         ctx.drawImage(img, 0, 0, width, height);
 
-        // Compress based on target format (PNG preserves transparency)
-        const compressedDataUrl = format === 'image/png' 
-          ? canvas.toDataURL('image/png') 
-          : canvas.toDataURL('image/jpeg', 0.70);
-          
-        callback(compressedDataUrl);
+        canvas.toBlob(async (blob) => {
+          if (!blob) {
+            const fallback = format === 'image/png' 
+              ? canvas.toDataURL('image/png') 
+              : canvas.toDataURL('image/jpeg', 0.70);
+            callback(fallback);
+            return;
+          }
+          try {
+            const cleanExt = format === 'image/png' ? 'png' : 'jpg';
+            const uploadFile = new File([blob], `${targetName}.${cleanExt}`, { type: format });
+            const r2Url = await uploadToR2(uploadFile, `${targetName}.${cleanExt}`);
+            callback(r2Url);
+          } catch (err) {
+            console.warn('Fallback to Local Base64 storage due to R2 error:', err);
+            const fallback = format === 'image/png' 
+              ? canvas.toDataURL('image/png') 
+              : canvas.toDataURL('image/jpeg', 0.70);
+            callback(fallback);
+          }
+        }, format, format === 'image/jpeg' ? 0.70 : undefined);
       };
       img.onerror = () => {
         callback(event.target.result);
@@ -117,9 +159,9 @@ export default function AdminDashboard() {
   const handleLogoUpload = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    compressImage(file, (compressedBase64) => {
-      updateSiteData({ logo: compressedBase64 });
-    }, 'image/png');
+    compressImage(file, (r2Url) => {
+      updateSiteData({ logo: r2Url });
+    }, 'image/png', 'logo');
   };
 
   const handleImageUpload = (targetKey, index = null, subIndex = null) => {
@@ -130,7 +172,6 @@ export default function AdminDashboard() {
       const file = e.target.files?.[0];
       if (!file) return;
       
-      // Auto-detect format to preserve PNG alpha-channel transparency across all uploaded assets
       const format = (
         file.type === 'image/png' || 
         file.type === 'image/gif' ||
@@ -140,26 +181,30 @@ export default function AdminDashboard() {
         targetKey === 'heroLogo'
       ) ? 'image/png' : 'image/jpeg';
 
-      compressImage(file, (compressedBase64) => {
+      const suffix = index !== null ? `_${index}` : '';
+      const subSuffix = subIndex !== null ? `_${subIndex}` : '';
+      const cleanName = `${targetKey}${suffix}${subSuffix}`;
+
+      compressImage(file, (r2Url) => {
         if (targetKey === 'hero') {
           updateSiteData({
-            bioData: { ...siteData.bioData, heroImage: compressedBase64 }
+            bioData: { ...siteData.bioData, heroImage: r2Url }
           });
         } else if (targetKey === 'silhouette') {
           updateSiteData({
-            bioData: { ...siteData.bioData, heroSilhouette: compressedBase64 }
+            bioData: { ...siteData.bioData, heroSilhouette: r2Url }
           });
         } else if (targetKey === 'heroLogo') {
           updateSiteData({
-            bioData: { ...siteData.bioData, heroLogo: compressedBase64 }
+            bioData: { ...siteData.bioData, heroLogo: r2Url }
           });
         } else if (targetKey === 'bio') {
           updateSiteData({
-            bioData: { ...siteData.bioData, bioImage: compressedBase64 }
+            bioData: { ...siteData.bioData, bioImage: r2Url }
           });
         } else if (targetKey === 'manifesto') {
           updateSiteData({
-            manifestoData: { ...siteData.manifestoData, image: compressedBase64 }
+            manifestoData: { ...siteData.manifestoData, image: r2Url }
           });
         } else if (targetKey === 'gig') {
           const nextGigs = [...siteData.gigsData];
@@ -171,9 +216,9 @@ export default function AdminDashboard() {
           while (gigImages.length < 5) gigImages.push('');
           
           if (subIndex !== null) {
-            gigImages[subIndex] = compressedBase64;
+            gigImages[subIndex] = r2Url;
           } else {
-            gigImages[0] = compressedBase64;
+            gigImages[0] = r2Url;
           }
           
           nextGigs[index] = { 
@@ -184,22 +229,21 @@ export default function AdminDashboard() {
           updateSiteData({ gigsData: nextGigs });
         } else if (targetKey === 'video') {
           const nextVideos = [...siteData.videosData];
-          nextVideos[index] = { ...nextVideos[index], thumbnail: compressedBase64 };
+          nextVideos[index] = { ...nextVideos[index], thumbnail: r2Url };
           updateSiteData({ videosData: nextVideos });
         } else if (targetKey === 'outro') {
           updateSiteData({
-            outroData: { ...siteData.outroData, image: compressedBase64 }
+            outroData: { ...siteData.outroData, image: r2Url }
           });
         } else if (targetKey === 'outroSilhouette') {
           updateSiteData({
-            outroData: { ...siteData.outroData, silhouette: compressedBase64 }
+            outroData: { ...siteData.outroData, silhouette: r2Url }
           });
         }
-      }, format);
+      }, format, cleanName);
     };
     input.click();
   };
-
   const handleImageDelete = (targetKey, index = null, subIndex = null) => {
     if (targetKey === 'logo') {
       updateSiteData({ logo: '/LOZANO - TRANSPARENTE BLANCO.png' });

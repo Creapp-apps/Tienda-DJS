@@ -8,21 +8,31 @@ export default function CartModal() {
 
   if (!isOpen) return null;
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     setCheckoutStatus('redirecting');
-    
-    // Simulate Mercado Pago Checkout Pro preferences endpoint call and redirect
-    setTimeout(() => {
-      setCheckoutStatus('success');
-      setTimeout(() => {
-        clearCart();
-        closeCart();
-        setCheckoutStatus('idle');
-        // Simulated success redirect
-        window.location.hash = 'vault';
-        alert('💳 Simulación de Mercado Pago:\n¡Pago aprobado con éxito! Tu material ya está disponible para descargar en tu bóveda.');
-      }, 1500);
-    }, 2000);
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items,
+          artistSlug: 'nehuen-lozano',
+        }),
+      });
+
+      if (!res.ok) throw new Error('Error al generar la preferencia de pago');
+      const { init_point } = await res.json();
+      
+      // Clear local cart just before redirecting so they return to a clean state
+      clearCart();
+      
+      // Redirect cleanly to Mercado Pago Checkout Pro Gate
+      window.location.href = init_point;
+    } catch (e) {
+      console.error(e);
+      alert('❌ Ocurrió un error al procesar el pago con Mercado Pago. Por favor, inténtelo de nuevo.');
+      setCheckoutStatus('idle');
+    }
   };
 
   return (

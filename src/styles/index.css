@@ -11,7 +11,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
   background-color: var(--void-deep);
   color: var(--white-pure);
   overflow-x: hidden;
@@ -70,11 +70,11 @@ ul, ol { list-style: none; padding: 0; }
 }
 
 /* === TYPOGRAPHY SCALE === */
-.font-display { font-family: 'Unbounded', sans-serif; }
-.font-body    { font-family: 'Space Grotesk', sans-serif; }
-.font-mono    { font-family: 'JetBrains Mono', monospace; }
+.font-display { font-family: var(--font-unbounded), 'Unbounded', sans-serif; }
+.font-body    { font-family: var(--font-space-grotesk), 'Space Grotesk', sans-serif; }
+.font-mono    { font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace; }
 
-h1, h2, h3 { font-family: 'Unbounded', sans-serif; font-weight: 900; line-height: 1.05; }
+h1, h2, h3 { font-family: var(--font-unbounded), 'Unbounded', sans-serif; font-weight: 900; line-height: 1.05; }
 h1 { font-size: clamp(3rem, 10vw, 10rem); letter-spacing: -0.03em; }
 h2 { font-size: clamp(2rem, 5vw, 5rem); letter-spacing: -0.02em; }
 h3 { font-size: clamp(1.2rem, 2.5vw, 2rem); letter-spacing: -0.01em; }
