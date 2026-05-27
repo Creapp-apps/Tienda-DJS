@@ -420,6 +420,12 @@ export default function AdminDashboard() {
             >
               OUTRO & CONTACTO
             </button>
+            <button
+              className={`admin-nav-btn font-mono ${activeTab === 'backup' ? 'admin-nav-btn--active' : ''}`}
+              onClick={() => setActiveTab('backup')}
+            >
+              💾 COPILACIÓN / BACKUP
+            </button>
           </nav>
 
           {/* Tab Contents */}
@@ -1333,6 +1339,69 @@ export default function AdminDashboard() {
                       }}
                       className="admin-input"
                     />
+                  </div>
+                </div>
+              </div>
+            )}
+            {activeTab === 'backup' && (
+              <div className="admin-form">
+                <h3 className="admin-subtitle font-display">Copia de Seguridad & Despliegue</h3>
+                <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--white-muted)', marginBottom: '1.5rem', lineHeight: '1.4' }}>
+                  El diseño y los cambios del sitio se guardan localmente en tu navegador. Para que estos cambios aparezcan en el servidor de producción (Vercel) de manera fija, puedes exportar la configuración actual en formato JSON, enviarla al asistente para que la guarde como la base de datos nativa del sitio, o pegarla en otro navegador.
+                </p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                  <div>
+                    <h4 className="font-mono" style={{ fontSize: '0.8rem', color: 'var(--neon-magenta)', marginBottom: '10px' }}>[ EXPORTAR ]</h4>
+                    <button
+                      type="button"
+                      className="admin-action-btn admin-action-btn--glow font-mono"
+                      style={{ width: '100%', padding: '12px', cursor: 'pointer' }}
+                      onClick={() => {
+                        const dataStr = JSON.stringify(siteData, null, 2);
+                        navigator.clipboard.writeText(dataStr);
+                        alert('¡Configuración copiada al portapapeles! Pégala en el chat con tu desarrollador para hacerla permanente en el servidor.');
+                      }}
+                    >
+                      📋 COPIAR RESPALDO JSON
+                    </button>
+                  </div>
+
+                  <div>
+                    <h4 className="font-mono" style={{ fontSize: '0.8rem', color: 'var(--neon-cyan)', marginBottom: '10px' }}>[ IMPORTAR ]</h4>
+                    <textarea
+                      id="import-json-area"
+                      className="admin-textarea font-mono"
+                      placeholder="Pega aquí el código JSON de respaldo..."
+                      rows={4}
+                      style={{ fontSize: '0.7rem', padding: '10px', background: 'rgba(255,255,255,0.03)', color: '#fff', width: '100%', border: '1px solid rgba(255,255,255,0.1)' }}
+                    />
+                    <button
+                      type="button"
+                      className="admin-action-btn font-mono"
+                      style={{ width: '100%', marginTop: '10px', padding: '8px', cursor: 'pointer' }}
+                      onClick={() => {
+                        try {
+                          const jsonText = document.getElementById('import-json-area').value;
+                          if (!jsonText.trim()) {
+                            alert('Por favor, pega un JSON válido.');
+                            return;
+                          }
+                          const parsed = JSON.parse(jsonText);
+                          if (parsed.bioData || parsed.manifestoData || parsed.gigsData) {
+                            updateSiteData(parsed);
+                            alert('¡Configuración importada con éxito! La página se actualizará.');
+                            window.location.reload();
+                          } else {
+                            alert('El formato JSON no parece ser una copia de seguridad válida.');
+                          }
+                        } catch (err) {
+                          alert('Error al parsear el JSON: ' + err.message);
+                        }
+                      }}
+                    >
+                      📥 APLICAR CONFIGURACIÓN
+                    </button>
                   </div>
                 </div>
               </div>
