@@ -1,7 +1,7 @@
 {
-  "/api/checkout/route": "/api/checkout",
-  "/_not-found/page": "/_not-found",
   "/api/upload/route": "/api/upload",
-  "/page": "/",
-  "/artists/[slug]/page": "/artists/[slug]"
+  "/_not-found/page": "/_not-found",
+  "/api/checkout/route": "/api/checkout",
+  "/artists/[slug]/page": "/artists/[slug]",
+  "/page": "/"
 }

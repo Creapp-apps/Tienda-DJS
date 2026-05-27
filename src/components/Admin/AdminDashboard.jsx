@@ -68,25 +68,22 @@ export default function AdminDashboard() {
   };
   const uploadToR2 = async (file, cleanName) => {
     try {
+      const formData = new FormData();
+      // Use cleanName if provided, otherwise preserve original file name
+      const uploadFile = cleanName 
+        ? new File([file], cleanName, { type: file.type }) 
+        : file;
+        
+      formData.append('file', uploadFile);
+
       const res = await fetch('/api/upload', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          filename: cleanName || file.name,
-          contentType: file.type,
-        }),
+        body: formData,
       });
-      if (!res.ok) throw new Error('Error al obtener firma de subida');
+
+      if (!res.ok) throw new Error('Error al subir archivo al servidor');
       
-      const { presignedUrl, publicUrl } = await res.json();
-      
-      const uploadRes = await fetch(presignedUrl, {
-        method: 'PUT',
-        headers: { 'Content-Type': file.type },
-        body: file,
-      });
-      if (!uploadRes.ok) throw new Error('Error al subir archivo a R2');
-      
+      const { publicUrl } = await res.json();
       return publicUrl;
     } catch (e) {
       console.error('R2 upload failed:', e);

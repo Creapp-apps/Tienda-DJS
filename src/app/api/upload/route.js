@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 const s3Client = new S3Client({
   region: 'auto',
@@ -13,30 +12,38 @@ const s3Client = new S3Client({
 
 export async function POST(req) {
   try {
-    const { filename, contentType } = await req.json();
-    if (!filename || !contentType) {
-      return NextResponse.json({ error: 'Faltan parámetros' }, { status: 400 });
+    const formData = await req.formData();
+    const file = formData.get('file');
+
+    if (!file) {
+      return NextResponse.json({ error: 'No se envió ningún archivo' }, { status: 400 });
     }
 
+    // Convert file to buffer for S3 upload
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
     const uniqueId = Math.random().toString(36).substring(2, 15) + '_' + Date.now();
-    const cleanFilename = filename.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const cleanFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
     const key = `uploads/${uniqueId}_${cleanFilename}`;
 
     const command = new PutObjectCommand({
       Bucket: 'tiendadjs-public-assets',
       Key: key,
-      ContentType: contentType,
+      Body: buffer,
+      ContentType: file.type,
     });
 
-    const presignedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+    await s3Client.send(command);
+
     const publicUrl = `${process.env.NEXT_PUBLIC_CLOUDFLARE_R2_PUBLIC_URL || 'https://pub-07c76c2db2ed47249738d31d00cccd6b.r2.dev'}/${key}`;
 
     return NextResponse.json({
-      presignedUrl,
+      success: true,
       publicUrl,
     });
   } catch (error) {
-    console.error('Error generating presigned URL:', error);
-    return NextResponse.json({ error: 'Error al generar firma de subida' }, { status: 500 });
+    console.error('Error uploading file to R2 via server:', error);
+    return NextResponse.json({ error: 'Error interno al subir archivo a R2' }, { status: 500 });
   }
 }
