@@ -13,6 +13,7 @@ export default function TourTracker() {
   const { siteData } = useSiteData();
 
   useGSAP(() => {
+    if (!sectionRef.current) return;
     const rows = sectionRef.current.querySelectorAll('.tour__row');
     rows.forEach((row, i) => {
       gsap.from(row, {

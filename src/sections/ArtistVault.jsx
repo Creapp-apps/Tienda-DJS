@@ -16,6 +16,7 @@ export default function ArtistVault() {
   const filters = ['ALL', 'EDIT', 'REMIX PACK', 'EXTENDED', 'SAMPLE PACK'];
 
   useGSAP(() => {
+    if (!sectionRef.current) return;
     /* Section title reveal */
     const title = sectionRef.current.querySelector('.vault__title');
     if (title) {

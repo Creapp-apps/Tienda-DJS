@@ -13,6 +13,7 @@ export default function ManifestoSection() {
   const manifesto = siteData.manifestoData;
 
   useGSAP(() => {
+    if (!sectionRef.current) return;
     /* Reveal each paragraph block */
     const blocks = sectionRef.current.querySelectorAll('.manifesto__block');
     blocks.forEach((block, i) => {

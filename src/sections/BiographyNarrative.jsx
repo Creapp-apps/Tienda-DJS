@@ -13,6 +13,7 @@ export default function BiographyNarrative() {
   const bio = siteData.bioData;
 
   useGSAP(() => {
+    if (!sectionRef.current) return;
     /* Reveal each paragraph block */
     const blocks = sectionRef.current.querySelectorAll('.bio__block');
     blocks.forEach((block, i) => {

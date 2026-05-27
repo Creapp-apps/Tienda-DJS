@@ -18,6 +18,7 @@ export default function HeroSection() {
   const hasSilhouette = !!siteData.bioData.heroSilhouette;
 
   useGSAP(() => {
+    if (!sectionRef.current) return;
     const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
 
     /* Title logo or characters entrance */

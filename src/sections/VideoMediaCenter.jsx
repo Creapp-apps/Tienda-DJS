@@ -13,6 +13,7 @@ export default function VideoMediaCenter() {
   const [lightbox, setLightbox] = useState(null);
 
   useGSAP(() => {
+    if (!sectionRef.current) return;
     const cards = sectionRef.current.querySelectorAll('.video-card');
     cards.forEach((card, i) => {
       gsap.from(card, {

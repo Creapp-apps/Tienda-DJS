@@ -44,6 +44,7 @@ export default function GigsCarousel() {
 
   useGSAP(() => {
     /* Section title reveal */
+    if (!sectionRef.current) return;
     const title = sectionRef.current.querySelector('.gigs__title');
     if (title) {
       gsap.from(title, {
