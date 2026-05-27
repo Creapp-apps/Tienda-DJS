@@ -132,14 +132,27 @@
   background: #050409; /* Solid opaque backdrop */
   display: flex;
   flex-direction: column;
-  padding: var(--space-md) 0;
+  padding: var(--space-sm) 0;
+  overflow-y: auto;
+}
+
+/* Scrollbar for nav */
+.admin-console__nav::-webkit-scrollbar {
+  width: 4px;
+}
+.admin-console__nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-console__nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
 }
 
 .admin-nav-btn {
   font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-align: left;
-  padding: 14px var(--space-xl);
+  padding: 10px var(--space-xl);
   color: var(--white-muted);
   border-left: 2px solid transparent;
   transition: all var(--duration-fast);
