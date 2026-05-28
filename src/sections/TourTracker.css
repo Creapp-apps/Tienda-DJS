@@ -131,9 +131,16 @@
     grid-template-columns: 1fr;
     gap: var(--space-md);
     padding: var(--space-lg) 0;
+    text-align: center;
+    justify-items: center;
   }
   .tour__action-col {
-    justify-self: start;
+    justify-self: center;
+    width: 100%;
+    max-width: 280px;
+  }
+  .tour__ticket-btn {
+    width: 100%;
   }
   .tour__floating-img { display: none; }
 }

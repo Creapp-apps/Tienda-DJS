@@ -206,6 +206,10 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 2rem); letter-spacing: -0.01em; }
 @media (max-width: 768px) {
   :root {
     --nav-height: 60px;
+    --space-lg: 1.5rem;
+    --space-xl: 2.5rem;
+    --space-2xl: 4.5rem;
+    --space-3xl: 6.5rem;
   }
   .section {
     padding-top: var(--space-2xl);

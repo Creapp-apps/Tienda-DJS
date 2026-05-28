@@ -113,10 +113,18 @@
     position: relative;
     top: 0;
     order: -1;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
+    display: flex;
+    justify-content: center;
+  }
+  .bio__side-image {
+    width: 100%;
+    max-width: 450px;
   }
   .bio__side-image img {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: auto;
+    max-height: 45vh;
+    object-fit: contain;
   }
   .bio__stats {
     grid-template-columns: repeat(2, 1fr);

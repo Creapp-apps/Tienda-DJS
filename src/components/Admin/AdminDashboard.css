@@ -706,3 +706,77 @@
 .sync-dot-pulse {
   animation: syncPulse 2s infinite;
 }
+
+/* Responsive mobile controls for Superadmin console */
+@media (max-width: 768px) {
+  .admin-pill {
+    bottom: 16px;
+    left: 16px;
+    padding: 8px 14px;
+    font-size: 0.6rem;
+  }
+  .admin-console {
+    height: 85vh;
+  }
+  .admin-console__header {
+    padding: var(--space-sm) var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+  .admin-console__title-wrap {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .admin-console__body {
+    flex-direction: column;
+  }
+  .admin-console__nav {
+    width: 100%;
+    height: auto;
+    max-height: 120px;
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid var(--glass-border);
+    padding: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .admin-nav-btn {
+    padding: 8px 12px;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .admin-nav-btn--active {
+    border-bottom-color: var(--neon-magenta);
+    background: rgba(236, 72, 153, 0.05);
+  }
+  .admin-console__content {
+    padding: var(--space-md);
+  }
+  .admin-form--split {
+    flex-direction: column;
+  }
+  .admin-gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .admin-gallery__grid--dense {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .admin-gig-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-md);
+  }
+  .admin-gig-card__media-grid {
+    width: 100%;
+  }
+  .admin-gig-card__fields {
+    grid-template-columns: 1fr;
+  }
+  .admin-gig-card__fields-full {
+    grid-column: span 1;
+  }
+}

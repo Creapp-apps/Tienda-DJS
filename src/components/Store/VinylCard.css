@@ -239,3 +239,29 @@
     opacity: 1;
   }
 }
+
+/* Small screens: scale down the disc to prevent horizontal layout stretching */
+@media (max-width: 600px) {
+  .vinyl-card {
+    padding: 6px;
+  }
+  .vinyl-card__disc-wrap {
+    width: 48px;
+    height: 48px;
+    top: 6px;
+    right: 6px;
+    transform: translate(14px, -4px) rotate(10deg);
+  }
+  .vinyl-card:hover .vinyl-card__disc-wrap,
+  .vinyl-card__disc-wrap--playing {
+    transform: translate(16px, -4px) rotate(10deg) !important;
+  }
+  .vinyl-card__disc-label {
+    width: 20px;
+    height: 20px;
+  }
+  .vinyl-card__disc-center {
+    width: 4px;
+    height: 4px;
+  }
+}

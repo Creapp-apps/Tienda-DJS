@@ -167,3 +167,22 @@
     grid-auto-rows: 220px;
   }
 }
+
+/* Touch fallback: always display details/play on touch screens */
+@media (hover: none) {
+  .video-card__play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .video-card__title {
+    opacity: 1;
+    transform: translateY(0);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+    padding: var(--space-sm) var(--space-md);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+}
