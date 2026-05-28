@@ -148,7 +148,7 @@ export default function SuperadminPage() {
   // Determinar la URL local o producción para abrir la tienda del artista
   const getArtistUrl = (slug, customDomain) => {
     if (typeof window === 'undefined') return '#';
-    const host = window.location.host; // ej. localhost:3000 o tiendadjs.com
+    const host = window.location.host; // ej. localhost:3000 o tienda-djs.vercel.app
     const protocol = window.location.protocol; // http: o https:
     
     if (customDomain) {
@@ -159,11 +159,26 @@ export default function SuperadminPage() {
       return `${protocol}//${slug}.localhost:3000`;
     }
 
-    // Producción en Vercel o dominio oficial
+    // Producción en Vercel gratis (no soporta wildcards de subdominio en .vercel.app)
     if (host.includes('vercel.app')) {
-      return `${protocol}//${slug}.tienda-djs.vercel.app`;
+      return `${protocol}//${host}/artists/${slug}`;
     }
-    return `${protocol}//${slug}.tiendadjs.com`;
+    
+    // Dominio oficial del SaaS (ej. tiendadjs.com) con soporte de wildcards
+    return `${protocol}//${slug}.${host}`;
+  };
+
+  const getPreviewUrl = () => {
+    if (typeof window === 'undefined') return 'slug.localhost:3000';
+    const host = window.location.host;
+    const activePreviewSlug = newArtistSlug || 'slug';
+    if (host.includes('localhost') || host.includes('127.0.0.1')) {
+      return `${activePreviewSlug}.localhost:3000`;
+    }
+    if (host.includes('vercel.app')) {
+      return `${host}/artists/${activePreviewSlug}`;
+    }
+    return `${activePreviewSlug}.${host}`;
   };
 
   return (
@@ -318,7 +333,7 @@ export default function SuperadminPage() {
                   required 
                 />
                 <div className="slug-preview">
-                  URL temporal: <span className="slug-preview-highlight">{newArtistSlug || 'slug'}.localhost:3000</span>
+                  URL temporal: <span className="slug-preview-highlight">{getPreviewUrl()}</span>
                 </div>
               </div>
 
