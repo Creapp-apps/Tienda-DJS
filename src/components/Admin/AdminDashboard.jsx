@@ -746,6 +746,62 @@ export default function AdminDashboard() {
                   </div>
 
                   <div className="admin-field">
+                    <label className="font-mono">Párrafo 1 de la Biografía</label>
+                    <textarea
+                      value={siteData.bioData?.paragraphs?.[0]?.text || ''}
+                      onChange={(e) => {
+                        const newParagraphs = [...(siteData.bioData?.paragraphs || [])];
+                        newParagraphs[0] = { ...newParagraphs[0], text: e.target.value };
+                        handleTextChange('bioData', 'paragraphs', newParagraphs);
+                      }}
+                      className="admin-input"
+                      rows={2}
+                    />
+                  </div>
+                  <div className="admin-field" style={{ marginTop: '-8px' }}>
+                    <label className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--neon-magenta)' }}>Texto Destacado (Párrafo 1)</label>
+                    <input
+                      type="text"
+                      value={siteData.bioData?.paragraphs?.[0]?.highlight || ''}
+                      onChange={(e) => {
+                        const newParagraphs = [...(siteData.bioData?.paragraphs || [])];
+                        newParagraphs[0] = { ...newParagraphs[0], highlight: e.target.value };
+                        handleTextChange('bioData', 'paragraphs', newParagraphs);
+                      }}
+                      className="admin-input"
+                      style={{ padding: '6px 10px', fontSize: '0.75rem' }}
+                    />
+                  </div>
+
+                  <div className="admin-field">
+                    <label className="font-mono">Párrafo 2 de la Biografía</label>
+                    <textarea
+                      value={siteData.bioData?.paragraphs?.[1]?.text || ''}
+                      onChange={(e) => {
+                        const newParagraphs = [...(siteData.bioData?.paragraphs || [])];
+                        newParagraphs[1] = { ...newParagraphs[1], text: e.target.value };
+                        handleTextChange('bioData', 'paragraphs', newParagraphs);
+                      }}
+                      className="admin-input"
+                      rows={2}
+                    />
+                  </div>
+                  <div className="admin-field" style={{ marginTop: '-8px' }}>
+                    <label className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--neon-magenta)' }}>Texto Destacado (Párrafo 2)</label>
+                    <input
+                      type="text"
+                      value={siteData.bioData?.paragraphs?.[1]?.highlight || ''}
+                      onChange={(e) => {
+                        const newParagraphs = [...(siteData.bioData?.paragraphs || [])];
+                        newParagraphs[1] = { ...newParagraphs[1], highlight: e.target.value };
+                        handleTextChange('bioData', 'paragraphs', newParagraphs);
+                      }}
+                      className="admin-input"
+                      style={{ padding: '6px 10px', fontSize: '0.75rem' }}
+                    />
+                  </div>
+
+                  <div className="admin-field">
                     <label className="font-mono">Imagen Lateral (Bio)</label>
                     <div style={{ display: 'flex', gap: '10px' }}>
                       <button
