@@ -15,17 +15,28 @@ export default function Footer() {
       <div className="container">
         <div className="footer__inner">
           <div className="footer__brand">
-            <img
-              src={
-                siteData.logo &&
-                siteData.logo !== '/images/logo/LOGO-TRANSPARENTE.png' &&
-                siteData.logo.trim() !== ''
-                  ? siteData.logo
-                  : '/LOZANO - TRANSPARENTE BLANCO.png'
-              }
-              alt="LOZANO"
-              className="footer__logo"
-            />
+            {siteData.logo &&
+            siteData.logo !== '/images/logo/LOGO-TRANSPARENTE.png' &&
+            siteData.logo !== '/LOZANO - TRANSPARENTE BLANCO.png' &&
+            siteData.logo.trim() !== '' ? (
+              <img
+                src={siteData.logo}
+                alt={siteData.name || 'Logo'}
+                className="footer__logo"
+              />
+            ) : (
+              <span className="footer__logo-text font-display" style={{
+                fontWeight: '900',
+                fontSize: '1.25rem',
+                letterSpacing: '0.1em',
+                color: 'var(--white-pure)',
+                textTransform: 'uppercase',
+                display: 'block',
+                marginBottom: '10px'
+              }}>
+                {siteData.name || 'ARTISTA'}
+              </span>
+            )}
             <p className="footer__tagline font-mono">{siteData.bioData.tagline || 'Electronic / Urban'}</p>
           </div>
 
@@ -45,7 +56,7 @@ export default function Footer() {
           </div>
 
           <div className="footer__legal">
-            <p className="font-mono">© {new Date().getFullYear()} LOZANO. Todos los derechos reservados.</p>
+            <p className="font-mono">© {new Date().getFullYear()} {siteData.name || 'ARTISTA'}. Todos los derechos reservados.</p>
           </div>
         </div>
       </div>

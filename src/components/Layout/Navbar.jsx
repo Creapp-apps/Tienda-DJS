@@ -41,17 +41,26 @@ export default function Navbar() {
         <div className="navbar__inner">
           <div className="navbar__left">
             <a href="#" className="navbar__logo" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-              <img
-                src={
-                  siteData.logo &&
-                  siteData.logo !== '/images/logo/LOGO-TRANSPARENTE.png' &&
-                  siteData.logo.trim() !== ''
-                    ? siteData.logo
-                    : '/LOZANO - TRANSPARENTE BLANCO.png'
-                }
-                alt="LOZANO"
-                className="navbar__logo-img"
-              />
+              {siteData.logo &&
+              siteData.logo !== '/images/logo/LOGO-TRANSPARENTE.png' &&
+              siteData.logo !== '/LOZANO - TRANSPARENTE BLANCO.png' &&
+              siteData.logo.trim() !== '' ? (
+                <img
+                  src={siteData.logo}
+                  alt={siteData.name || 'Logo'}
+                  className="navbar__logo-img"
+                />
+              ) : (
+                <span className="navbar__logo-text font-display" style={{
+                  fontWeight: '900',
+                  fontSize: '1.25rem',
+                  letterSpacing: '0.1em',
+                  color: 'var(--white-pure)',
+                  textTransform: 'uppercase'
+                }}>
+                  {siteData.name || 'ARTISTA'}
+                </span>
+              )}
             </a>
 
             {/* Music Streaming Platforms */}

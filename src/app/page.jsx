@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from 'react';
 import SmoothScroll from '../components/Layout/SmoothScroll';
 import Navbar from '../components/Layout/Navbar';
 import Footer from '../components/Layout/Footer';
@@ -13,30 +14,36 @@ import FarewellOutro from '../sections/FarewellOutro';
 import CartModal from '../components/Store/CartModal';
 import GrainOverlay from '../components/GrainOverlay';
 import AdminDashboard from '../components/Admin/AdminDashboard';
+import Preloader from '../components/Layout/Preloader';
 
 export default function Home() {
-  const defaultSlug = 'nehuen-lozano';
+  const defaultSlug = '';
+  const [preloaderActive, setPreloaderActive] = useState(true);
 
   return (
-    <SmoothScroll>
-      <GrainOverlay />
+    <>
+      <Preloader slug={defaultSlug} onComplete={() => setPreloaderActive(false)} />
       
-      <Navbar />
-      
-      <main>
-        <HeroSection slug={defaultSlug} />
-        <BiographyNarrative slug={defaultSlug} />
-        <ManifestoSection slug={defaultSlug} />
-        <GigsCarousel slug={defaultSlug} />
-        <VideoMediaCenter slug={defaultSlug} />
-        <ArtistVault slug={defaultSlug} />
-        <FarewellOutro slug={defaultSlug} />
-      </main>
-      
-      <Footer />
-      
-      <CartModal />
-      <AdminDashboard />
-    </SmoothScroll>
+      <SmoothScroll>
+        <GrainOverlay />
+        
+        <Navbar />
+        
+        <main>
+          <HeroSection slug={defaultSlug} />
+          <BiographyNarrative slug={defaultSlug} />
+          <ManifestoSection slug={defaultSlug} />
+          <GigsCarousel slug={defaultSlug} />
+          <VideoMediaCenter slug={defaultSlug} />
+          <ArtistVault slug={defaultSlug} />
+          <FarewellOutro slug={defaultSlug} />
+        </main>
+        
+        <Footer />
+        
+        <CartModal />
+        <AdminDashboard />
+      </SmoothScroll>
+    </>
   );
 }

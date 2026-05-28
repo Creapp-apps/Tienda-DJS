@@ -1,10 +1,13 @@
 import { useCart } from '../../context/CartContext';
 import { useState } from 'react';
+import { useParams } from 'next/navigation';
 import './CartModal.css';
 
 export default function CartModal() {
   const { isOpen, items, total, removeItem, closeCart, clearCart } = useCart();
   const [checkoutStatus, setCheckoutStatus] = useState('idle'); // idle, redirecting, success
+  const params = useParams();
+  const artistSlug = params?.slug || 'nehuen-lozano';
 
   if (!isOpen) return null;
 
@@ -16,7 +19,7 @@ export default function CartModal() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items,
-          artistSlug: 'nehuen-lozano',
+          artistSlug,
         }),
       });
 

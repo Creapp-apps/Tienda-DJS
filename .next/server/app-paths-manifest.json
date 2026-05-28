@@ -1,9 +1,10 @@
 {
-  "/api/checkout/route": "app/api/checkout/route.js",
-  "/api/site-data/route": "app/api/site-data/route.js",
-  "/api/media/[...key]/route": "app/api/media/[...key]/route.js",
+  "/api/superadmin/artists/route": "app/api/superadmin/artists/route.js",
+  "/api/artists/[slug]/route": "app/api/artists/[slug]/route.js",
+  "/api/artists/[slug]/save/route": "app/api/artists/[slug]/save/route.js",
   "/api/upload/route": "app/api/upload/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/artists/[slug]/page": "app/artists/[slug]/page.js",
-  "/page": "app/page.js"
+  "/api/media/[...key]/route": "app/api/media/[...key]/route.js",
+  "/page": "app/page.js",
+  "/superadmin/page": "app/superadmin/page.js",
+  "/artists/[slug]/page": "app/artists/[slug]/page.js"
 }

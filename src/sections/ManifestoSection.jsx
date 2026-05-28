@@ -116,21 +116,43 @@ export default function ManifestoSection() {
             </span>
             <h2 className="manifesto__intro">{manifesto.intro}</h2>
 
-            {manifesto.paragraphs && manifesto.paragraphs.map((p, i) => (
-              <div key={i} className="manifesto__block">
-                <p className="manifesto__paragraph">
-                  {p.text.split(p.highlight).map((part, j, arr) => (
-                    <span key={j}>
-                      {part}
-                      {j < arr.length - 1 && (
-                        <em className="manifesto__highlight">{p.highlight}</em>
-                      )}
-                    </span>
-                  ))}
-                </p>
-              </div>
-            ))}
+            {Array.isArray(manifesto.paragraphs) && manifesto.paragraphs.map((p, i) => {
+              if (!p) return null;
 
+              if (typeof p === 'string') {
+                return (
+                  <div key={i} className="manifesto__block">
+                    <p className="manifesto__paragraph">{p}</p>
+                  </div>
+                );
+              }
+
+              const text = p.text || '';
+              const highlight = p.highlight || '';
+
+              if (!highlight) {
+                return (
+                  <div key={i} className="manifesto__block">
+                    <p className="manifesto__paragraph">{text}</p>
+                  </div>
+                );
+              }
+
+              return (
+                <div key={i} className="manifesto__block">
+                  <p className="manifesto__paragraph">
+                    {text.split(highlight).map((part, j, arr) => (
+                      <span key={j}>
+                        {part}
+                        {j < arr.length - 1 && (
+                          <em className="manifesto__highlight">{highlight}</em>
+                        )}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

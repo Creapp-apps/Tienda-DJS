@@ -18,19 +18,41 @@ export async function middleware(req) {
   const hostname = req.headers.get('host') || '';
   const pathname = url.pathname;
 
-  // Default fallback artist
-  let slug = 'nehuen-lozano';
+  // 1. Exclude admin portal from any internal rewrites
+  if (pathname.startsWith('/superadmin')) {
+    return NextResponse.next();
+  }
 
-  // Resolve custom domains or localhost testing ports to their respective artist slug
-  // In production, we will query Supabase table 'artists' to match 'custom_domain' dynamically.
+  let slug = '';
+
+  // 2. Resolve custom domains
   if (hostname.includes('otrodj.com')) {
     slug = 'otro-dj';
   } else if (hostname.includes('nehuenlozano.com')) {
     slug = 'nehuen-lozano';
   }
 
-  // Rewrite request internally to /artists/[slug]/...
-  url.pathname = `/artists/${slug}${pathname}`;
+  // 3. Resolve subdomains (e.g. artist-slug.localhost:3000 or artist-slug.tiendadjs.com)
+  if (!slug) {
+    let subdomain = '';
+    const parts = hostname.split('.');
+    if (parts.length > 2) {
+      subdomain = parts[0];
+    } else if (parts.length === 2 && parts[1].includes('localhost')) {
+      subdomain = parts[0];
+    }
 
-  return NextResponse.rewrite(url);
+    if (subdomain && subdomain !== 'www') {
+      slug = subdomain;
+    }
+  }
+
+  // 4. If an active dynamic tenant slug is detected, rewrite internally to /artists/[slug]/...
+  if (slug) {
+    url.pathname = `/artists/${slug}${pathname}`;
+    return NextResponse.rewrite(url);
+  }
+
+  // 5. Otherwise, serve the default platform pages (e.g. main template, layouts, base home page)
+  return NextResponse.next();
 }

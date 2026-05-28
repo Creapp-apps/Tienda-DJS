@@ -71,7 +71,8 @@ export default function AdminDashboard() {
       const formData = new FormData();
       formData.append('file', file, cleanName || file.name);
 
-      const res = await fetch('/api/upload', {
+      const artistSlug = siteData.slug || 'global';
+      const res = await fetch(`/api/upload?slug=${artistSlug}`, {
         method: 'POST',
         body: formData,
       });
@@ -238,7 +239,7 @@ export default function AdminDashboard() {
   };
   const handleImageDelete = (targetKey, index = null, subIndex = null) => {
     if (targetKey === 'logo') {
-      updateSiteData({ logo: '/LOZANO - TRANSPARENTE BLANCO.png' });
+      updateSiteData({ logo: '' });
     } else if (targetKey === 'hero') {
       updateSiteData({
         bioData: { ...siteData.bioData, heroImage: '' }
@@ -384,22 +385,36 @@ export default function AdminDashboard() {
         onWheel={(e) => e.stopPropagation()}
       >
         <header className="admin-console__header">
-          <div className="admin-console__title-wrap">
+          <div className="admin-console__title-wrap" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <span className="admin-console__accent font-mono">[CONSOLE_V1]</span>
-            <h2 className="admin-console__title font-display">Lozano Asset Control</h2>
+            <h2 className="admin-console__title font-display">Consola de contenidos</h2>
+            
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'rgba(16, 185, 129, 0.08)',
+              border: '1px solid rgba(16, 185, 129, 0.2)',
+              borderRadius: '20px',
+              padding: '6px 14px',
+              color: '#10b981',
+              fontSize: '0.75rem',
+              fontWeight: '700',
+              letterSpacing: '0.05em'
+            }} className="font-mono">
+              <span className="sync-dot-pulse" style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: '#10b981',
+                boxShadow: '0 0 8px #10b981',
+                display: 'inline-block'
+              }}></span>
+              AUTOSAVE ACTIVO (NUBE)
+            </div>
           </div>
 
           <div className="admin-console__actions">
-            <button
-              className="admin-action-btn admin-action-btn--magenta font-mono"
-              onClick={() => {
-                const dataStr = JSON.stringify(siteData, null, 2);
-                navigator.clipboard.writeText(dataStr);
-                alert('¡Configuración copiada al portapapeles! Pégala en el chat con tu desarrollador para hacerla permanente en el servidor.');
-              }}
-            >
-              📋 COPIAR RESPALDO JSON
-            </button>
             <button
               className="admin-action-btn admin-action-btn--glow font-mono"
               onClick={autofillStockPhotos}
@@ -479,38 +494,6 @@ export default function AdminDashboard() {
           <div className="admin-console__content">
             {activeTab === 'brand' && (
               <div className="admin-form">
-                {/* Banner informativo sobre persistencia */}
-                <div style={{
-                  background: 'rgba(236, 72, 153, 0.07)',
-                  border: '1px solid rgba(236, 72, 153, 0.2)',
-                  borderRadius: '12px',
-                  padding: '16px',
-                  marginBottom: '24px',
-                  boxShadow: '0 0 15px rgba(236, 72, 153, 0.05)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px'
-                }}>
-                  <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--white-pure)', margin: 0, lineHeight: '1.5' }}>
-                    💡 <strong>IMPORTANTE: PERSISTENCIA EN INCÓGNITO Y PRODUCCIÓN</strong>
-                    <br />
-                    Los cambios realizados en esta consola se guardan en la memoria local de tu navegador actual. Para verlos reflejados en modo incógnito, en dispositivos móviles o para todos tus clientes en producción, debes hacer clic en el botón superior rosa <strong>📋 COPIAR RESPALDO JSON</strong> y enviarme el código resultante para que lo guarde permanentemente en el servidor.
-                  </p>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <button
-                      type="button"
-                      className="admin-action-btn admin-action-btn--magenta font-mono"
-                      style={{ padding: '6px 12px', fontSize: '0.65rem' }}
-                      onClick={() => {
-                        const dataStr = JSON.stringify(siteData, null, 2);
-                        navigator.clipboard.writeText(dataStr);
-                        alert('¡Configuración copiada al portapapeles! Pégala en el chat con tu desarrollador para hacerla permanente en el servidor.');
-                      }}
-                    >
-                      📋 COPIAR RESPALDO JSON AHORA
-                    </button>
-                  </div>
-                </div>
 
                 <div className="admin-field">
                   <label className="font-mono">Logotipo Principal (PNG/SVG recomendado)</label>
@@ -524,9 +507,9 @@ export default function AdminDashboard() {
                     />
                     <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                       <label htmlFor="logo-upload" className="admin-upload-box font-mono" data-cursor-hover style={{ margin: 0 }}>
-                        {siteData.logo.startsWith('data:') ? '✓ Logo Cargado (Cambiar)' : 'Subir Imagen de Logo'}
+                        {siteData.logo && siteData.logo.trim() !== '' ? '✓ Logo Cargado (Cambiar)' : 'Subir Imagen de Logo'}
                       </label>
-                      {siteData.logo !== '/LOZANO - TRANSPARENTE BLANCO.png' && (
+                      {siteData.logo && siteData.logo.trim() !== '' && (
                         <button
                           className="admin-delete-btn font-mono"
                           onClick={() => handleImageDelete('logo')}
@@ -535,7 +518,7 @@ export default function AdminDashboard() {
                         </button>
                       )}
                     </div>
-                    {siteData.logo && (
+                    {siteData.logo && siteData.logo.trim() !== '' && (
                       <div className="admin-logo-preview">
                         <img src={siteData.logo} alt="Preview" />
                       </div>

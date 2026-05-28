@@ -72,20 +72,43 @@ export default function BiographyNarrative() {
           <div className="bio__text-col">
             <h2 className="bio__intro">{bio.intro}</h2>
 
-            {bio.paragraphs.map((p, i) => (
-              <div key={i} className="bio__block">
-                <p className="bio__paragraph">
-                  {p.text.split(p.highlight).map((part, j, arr) => (
-                    <span key={j}>
-                      {part}
-                      {j < arr.length - 1 && (
-                        <em className="bio__highlight">{p.highlight}</em>
-                      )}
-                    </span>
-                  ))}
-                </p>
-              </div>
-            ))}
+            {Array.isArray(bio.paragraphs) && bio.paragraphs.map((p, i) => {
+              if (!p) return null;
+
+              if (typeof p === 'string') {
+                return (
+                  <div key={i} className="bio__block">
+                    <p className="bio__paragraph">{p}</p>
+                  </div>
+                );
+              }
+
+              const text = p.text || '';
+              const highlight = p.highlight || '';
+
+              if (!highlight) {
+                return (
+                  <div key={i} className="bio__block">
+                    <p className="bio__paragraph">{text}</p>
+                  </div>
+                );
+              }
+
+              return (
+                <div key={i} className="bio__block">
+                  <p className="bio__paragraph">
+                    {text.split(highlight).map((part, j, arr) => (
+                      <span key={j}>
+                        {part}
+                        {j < arr.length - 1 && (
+                          <em className="bio__highlight">{highlight}</em>
+                        )}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+              );
+            })}
           </div>
 
           <div className="bio__image-col">
@@ -107,10 +130,10 @@ export default function BiographyNarrative() {
 
         {/* Stats row */}
         <div className="bio__stats">
-          {bio.stats.map((stat, i) => (
+          {Array.isArray(bio.stats) && bio.stats.map((stat, i) => (
             <div key={i} className="bio__stat">
-              <span className="bio__stat-value font-display">{stat.value}</span>
-              <span className="bio__stat-label font-mono">{stat.label}</span>
+              <span className="bio__stat-value font-display">{stat?.value || '0'}</span>
+              <span className="bio__stat-label font-mono">{stat?.label || ''}</span>
             </div>
           ))}
         </div>

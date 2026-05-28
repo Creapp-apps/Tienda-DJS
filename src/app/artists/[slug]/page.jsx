@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from 'react';
+import { use, useState } from 'react';
 import SmoothScroll from '../../../components/Layout/SmoothScroll';
 import Navbar from '../../../components/Layout/Navbar';
 import Footer from '../../../components/Layout/Footer';
@@ -14,30 +14,36 @@ import FarewellOutro from '../../../sections/FarewellOutro';
 import CartModal from '../../../components/Store/CartModal';
 import GrainOverlay from '../../../components/GrainOverlay';
 import AdminDashboard from '../../../components/Admin/AdminDashboard';
+import Preloader from '../../../components/Layout/Preloader';
 
 export default function ArtistPage({ params }) {
   const { slug } = use(params);
+  const [preloaderActive, setPreloaderActive] = useState(true);
 
   return (
-    <SmoothScroll>
-      <GrainOverlay />
+    <>
+      <Preloader slug={slug} onComplete={() => setPreloaderActive(false)} />
       
-      <Navbar />
-      
-      <main>
-        <HeroSection slug={slug} />
-        <BiographyNarrative slug={slug} />
-        <ManifestoSection slug={slug} />
-        <GigsCarousel slug={slug} />
-        <VideoMediaCenter slug={slug} />
-        <ArtistVault slug={slug} />
-        <FarewellOutro slug={slug} />
-      </main>
-      
-      <Footer />
-      
-      <CartModal />
-      <AdminDashboard />
-    </SmoothScroll>
+      <SmoothScroll>
+        <GrainOverlay />
+        
+        <Navbar />
+        
+        <main>
+          <HeroSection slug={slug} />
+          <BiographyNarrative slug={slug} />
+          <ManifestoSection slug={slug} />
+          <GigsCarousel slug={slug} />
+          <VideoMediaCenter slug={slug} />
+          <ArtistVault slug={slug} />
+          <FarewellOutro slug={slug} />
+        </main>
+        
+        <Footer />
+        
+        <CartModal />
+        <AdminDashboard />
+      </SmoothScroll>
+    </>
   );
 }

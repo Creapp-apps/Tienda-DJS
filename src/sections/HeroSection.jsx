@@ -155,13 +155,19 @@ export default function HeroSection() {
     return () => section.removeEventListener('mousemove', onMove);
   }, [hasSilhouette]);
 
-  const logoSrc = siteData.bioData.heroLogo || siteData.logo || '/LOZANO - TRANSPARENTE BLANCO.png';
+  const hasCustomLogo = (siteData.bioData.heroLogo && siteData.bioData.heroLogo.trim() !== '') ||
+                         (siteData.logo && 
+                          siteData.logo !== '/images/logo/LOGO-TRANSPARENTE.png' && 
+                          siteData.logo !== '/LOZANO - TRANSPARENTE BLANCO.png' && 
+                          siteData.logo.trim() !== '');
+
+  const logoSrc = hasCustomLogo ? (siteData.bioData.heroLogo || siteData.logo) : null;
   const isCustomHeroLogo = !!siteData.bioData.heroLogo;
   const currentLogoScale = isCustomHeroLogo
     ? (siteData.bioData.heroLogoScale !== undefined ? siteData.bioData.heroLogoScale : 100)
     : (siteData.logoScale !== undefined ? siteData.logoScale : 100);
 
-  const titleText = 'LOZANO';
+  const titleText = (siteData.name || 'ARTISTA').toUpperCase();
   const heroImageSrc = siteData.bioData.heroImage &&
     siteData.bioData.heroImage !== '/images/portraits/djmirandocentro.jpg' &&
     siteData.bioData.heroImage.trim() !== ''
@@ -179,7 +185,7 @@ export default function HeroSection() {
           <div ref={bgImageRef} className="hero__image hero__image--bg">
             <img
               src={heroImageSrc}
-              alt="LOZANO portrait"
+              alt={`${titleText} portrait`}
               className="hero__portrait"
             />
           </div>
@@ -189,7 +195,7 @@ export default function HeroSection() {
             <div ref={fgImageRef} className="hero__image hero__image--fg">
               <img
                 src={siteData.bioData.heroSilhouette}
-                alt="LOZANO silhouette"
+                alt={`${titleText} silhouette`}
                 className="hero__portrait hero__portrait--silhouette"
               />
             </div>
@@ -210,7 +216,7 @@ export default function HeroSection() {
             >
               <img 
                 src={logoSrc} 
-                alt="LOZANO logo" 
+                alt={`${titleText} logo`} 
                 className="hero__logo-img" 
               />
             </div>

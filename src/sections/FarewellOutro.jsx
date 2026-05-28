@@ -44,24 +44,39 @@ export default function FarewellOutro() {
     window.scrollBy({ top: -150, behavior: 'smooth' });
   };
 
+  const activeSlug = siteData.slug || 'artista';
+  const isLozano = activeSlug === 'nehuen-lozano';
+
+  // Get the artist's upload logo if available, or the Lozano logo ONLY if it's actually Lozano
+  const defaultOutroLogo = isLozano ? '/LOZANO - TRANSPARENTE BLANCO.png' : (siteData.logo || '');
+
   const data = siteData.outroData || {
     title: "THE SOUND EXPERIENCE",
-    subtitle: "¿Listo para llevar los sets híbridos de LOZANO a tu festival, club o evento privado?",
-    image: "/LOZANO - TRANSPARENTE BLANCO.png",
-    silhouette: "/mirando derecha.png",
+    subtitle: isLozano
+      ? "¿Listo para llevar los sets híbridos de LOZANO a tu festival, club o evento privado?"
+      : `¿Listo para llevar los sets híbridos de ${siteData.name || 'ARTISTA'} a tu festival, club o evento privado?`,
+    image: defaultOutroLogo,
+    silhouette: isLozano ? "/mirando derecha.png" : "",
     cta1Text: "RESERVAR BOOKING",
-    cta1Url: "https://wa.me/5491100000000?text=Hola%20Lozano,%20me%20gustaria%20consultar%20por%20fechas%20de%20booking...",
+    cta1Url: isLozano 
+      ? "https://wa.me/5491100000000?text=Hola%20Lozano,%20me%20gustaria%20consultar%20por%20fechas%20de%20booking..."
+      : "",
     cta2Text: "ESCUCHAR MÚSICA",
     cta2Url: "#vault"
   };
 
   const showSilhouette = siteData.outroData
-    ? (!!siteData.outroData.silhouette && siteData.outroData.silhouette !== "")
-    : true;
+    ? (!!siteData.outroData.silhouette && siteData.outroData.silhouette !== "" && (siteData.outroData.silhouette !== "/mirando derecha.png" || isLozano))
+    : isLozano;
 
   const silhouetteSrc = siteData.outroData
     ? siteData.outroData.silhouette
-    : "/mirando derecha.png";
+    : (isLozano ? "/mirando derecha.png" : "");
+
+  // Derive final image source for the Outro card, ensuring Lozano fallback logo NEVER leaks to other artists
+  const outroImage = data.image && data.image.trim() !== '' && (data.image !== '/LOZANO - TRANSPARENTE BLANCO.png' || isLozano)
+    ? data.image
+    : (isLozano ? '/LOZANO - TRANSPARENTE BLANCO.png' : '');
 
   const handleScrollToVault = (e) => {
     if (data.cta2Url && data.cta2Url.startsWith('#')) {
@@ -140,15 +155,25 @@ export default function FarewellOutro() {
               </div>
             )}
 
-            <div className="outro-card__media">
-              <div className="outro-card__image-wrapper">
-                <img 
-                  src={data.image || '/LOZANO - TRANSPARENTE BLANCO.png'} 
-                  alt="LOZANO - Outro Logo" 
-                  className="outro-card__img"
-                />
+            {outroImage ? (
+              <div className="outro-card__media">
+                <div className="outro-card__image-wrapper">
+                  <img 
+                    src={outroImage} 
+                    alt="Logo" 
+                    className="outro-card__img"
+                  />
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="outro-card__media">
+                <div className="outro-card__media--text">
+                  <h3 className="outro-card__media-title font-display">
+                    {siteData.name || 'ARTISTA'}
+                  </h3>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

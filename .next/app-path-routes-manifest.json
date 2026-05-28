@@ -1,9 +1,0 @@
-{
-  "/api/checkout/route": "/api/checkout",
-  "/api/site-data/route": "/api/site-data",
-  "/api/media/[...key]/route": "/api/media/[...key]",
-  "/api/upload/route": "/api/upload",
-  "/_not-found/page": "/_not-found",
-  "/artists/[slug]/page": "/artists/[slug]",
-  "/page": "/"
-}

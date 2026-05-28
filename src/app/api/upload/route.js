@@ -23,9 +23,13 @@ export async function POST(req) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
+    // Obtener el slug del artista para aislar sus subidas en una carpeta dedicada en Cloudflare R2
+    const { searchParams } = new URL(req.url);
+    const slug = searchParams.get('slug') || 'global';
+
     const uniqueId = Math.random().toString(36).substring(2, 15) + '_' + Date.now();
     const cleanFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-    const key = `uploads/${uniqueId}_${cleanFilename}`;
+    const key = `uploads/${slug}/${uniqueId}_${cleanFilename}`;
 
     const command = new PutObjectCommand({
       Bucket: 'tiendadjs-public-assets',
